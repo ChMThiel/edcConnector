@@ -173,10 +173,8 @@ public class JsonObjectFromPolicyTransformer extends AbstractJsonLdTransformer<P
                     );
             
             Optional.ofNullable(policy.getProfiles())
-                    .ifPresent(profiles -> builder.add(
-                            ODRL_PROFILE_ATTRIBUTE,
-                            jsonFactory.createArrayBuilder(profiles))
-                    );
+                    .map(jsonFactory::createArrayBuilder)
+                    .ifPresent(profiles -> builder.add(ODRL_PROFILE_ATTRIBUTE, profiles));
 
             return builder.build();
         }

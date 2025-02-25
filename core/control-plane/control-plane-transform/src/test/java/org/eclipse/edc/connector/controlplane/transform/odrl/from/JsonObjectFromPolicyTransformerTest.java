@@ -427,16 +427,15 @@ class JsonObjectFromPolicyTransformerTest {
     }
     
     @Test
-    void shouldTransformPolicyWithProfile() {
-        //given
+    void transform_PolicyWithProfile_returnJsonObject() {
         var transformer = new JsonObjectFromPolicyTransformer(jsonFactory, participantIdMapper, true);
-        List<String> profiles = List.of("profileA", "profileB");
+        var profiles = List.of("profileA", "profileB");
         var policy = Policy.Builder.newInstance()
                 .profiles(profiles)
                 .build();
-        //when
+
         var result = transformer.transform(policy, context);
-        //then
+
         assertThat(result.getJsonArray(ODRL_PROFILE_ATTRIBUTE)).isEqualTo(Json.createArrayBuilder(profiles).build());
         verify(context, never()).reportProblem(anyString());
     }
